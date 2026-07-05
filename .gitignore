@@ -1,3 +1,5 @@
 my_library_test
 libstring-utils.a
 my_program
+
+src/*.o
