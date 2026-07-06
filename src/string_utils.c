@@ -190,6 +190,30 @@ char* my_strstr(const char *haystack, const char *needle){
     return NULL;
 }
 
+// 9 strspn
+int my_strspn(const char *str, const char *accept) {
+    if(*accept == '\0')return 0;
+    
+    int i = 0;
+    int k = 0;
+
+    while(*(str + i) != '\0'){ 
+        int count = 0;
+        k = 0; 
+        while(*(accept + k) != '\0') { 
+            if(*(str + i) == *(accept + k)){
+                count = 1; 
+                break;
+            }
+            k++;
+        }
+        if(!count){ 
+            return i;
+        }
+        i++;
+    }
+    return i;
+}
 
 
 
