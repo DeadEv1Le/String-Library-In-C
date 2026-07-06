@@ -159,7 +159,7 @@ char* my_strchr(const char *str, int ch) {
 
 }
 
-//7 strrchr 
+//8 strrchr 
 char* my_strrchr(const char *str, int ch){
     int i = my_strlen(str);
     
@@ -174,7 +174,7 @@ char* my_strrchr(const char *str, int ch){
     return NULL;
 }
 
-//8 strstr 
+//9 strstr 
 char* my_strstr(const char *haystack, const char *needle){
     if (*needle == '\0') return (char*)haystack;
     for (const char *h = haystack; *h != '\0'; h++) {
@@ -190,7 +190,7 @@ char* my_strstr(const char *haystack, const char *needle){
     return NULL;
 }
 
-// 9 strspn
+// 10 strspn
 int my_strspn(const char *str, const char *accept) {
     if(*accept == '\0')return 0;
     
@@ -215,6 +215,30 @@ int my_strspn(const char *str, const char *accept) {
     return i;
 }
 
+// 11 strcspn 
+int my_strcspn(const char *str, const char *reject){
+    int i = 0;
+    int k = 0;
+    while(*(str + i) != '\0'){ 
+        int count = 0;
+        k = 0; 
+        while(*(reject + k) != '\0') { 
+            if(*(str + i) == *(reject + k)){
+                count = 1; 
+                break;
+            }
+            k++;
+        }
+        if(count){ 
+            return i;
+        }
+        i++;
+    }
+
+    return i;
+   
+
+}
 
 
 
