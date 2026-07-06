@@ -239,6 +239,33 @@ int my_strcspn(const char *str, const char *reject){
    
 
 }
+//12 strpbrk
+
+char* my_strpbrk(const char *str, const char *accept){ 
+    if(*accept == '\0')return NULL;
+    
+    int i = 0;
+    int k = 0;
+
+    while(*(str + i) != '\0'){ 
+        int count = 0;
+        k = 0; 
+        while(*(accept + k) != '\0') { 
+            if(*(str + i) == *(accept + k)){
+                count = 1; 
+                break;
+            }
+            k++;
+        }
+        if(count){ 
+
+            return (char*) (str + i);
+        }
+        i++;
+    }
+    return NULL;
+}
+
 
 
 
