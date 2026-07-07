@@ -305,7 +305,25 @@ char* my_strtok(char *str, const char *delim){
     
 }
 
+// 14 my count char
+int my_count_char(const char *str, char ch){ 
+    if(*str == '\0'){
+        return 0;
+    }
+    if(ch == '\0'){
+        return 0; 
+    }
+    int count = 0;
+   
+    while(*str != '\0'){
+        if(*(str) == ch){
+            count++;
+        }
+        str++;
+    }
 
+    return count;
+}
 
 
 
