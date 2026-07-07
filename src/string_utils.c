@@ -345,9 +345,23 @@ int my_strequal(const char *str1, const char *str2){
     if (*str1 != *str2) {
         flag = 0;
     }
-    
+
     return flag;
 
+}
+
+// 16 fill string
+void my_fill_string(char *str, char ch){
+    
+    if(str == NULL){
+        return; 
+    }
+    
+   
+    while(*(str) != '\0'){
+        *(str) = ch;
+        str++;
+    }
 }
 
 
