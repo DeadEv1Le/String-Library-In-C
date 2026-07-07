@@ -266,7 +266,44 @@ char* my_strpbrk(const char *str, const char *accept){
     return NULL;
 }
 
+//13 strtok
 
+char* my_strtok(char *str, const char *delim){
+    if(*(delim) == '\0') return NULL;
+
+    static char* tok = NULL;
+    if(str != NULL) tok = str;
+
+  
+    
+    if (tok == NULL) return NULL;
+   
+
+    while (*tok != '\0' && *tok == *delim) {
+        tok++;
+    }
+
+    if (*tok == '\0') {
+        tok = NULL;
+        return NULL;
+    }
+
+    char * start = tok;
+    if (*start == '\0') return NULL;
+   
+   
+    while(*(tok) != '\0') {
+        if(*(tok) == *(delim)){
+            *(tok) = '\0';
+            tok++;
+            return start;
+        } 
+        tok++;
+    }
+
+    return start;
+    
+}
 
 
 
