@@ -384,6 +384,39 @@ int my_strlastindex(const char* str, char ch) {
 }
 
 
+// 18 strpalindromoe
+
+
+
+int my_strpalindrome(const char *str) {
+    if (str == NULL) {
+        return 0; 
+    }
+
+    if (*str == '\0') {
+        return 1;
+    }
+
+    const char *left = str;       
+    const char *right = str;      
+   
+    while (*right != '\0') {
+        right++;
+    }
+    right--; 
+
+   
+    while (left < right) {
+        if (*left != *right) {
+            return 0;
+        }
+        left++;  
+        right--; 
+    }
+
+   
+    return 1;
+}
 
 
 
