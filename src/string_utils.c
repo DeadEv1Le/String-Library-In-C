@@ -364,6 +364,24 @@ void my_fill_string(char *str, char ch){
     }
 }
 
+//17 add strlastindex 
+int my_strlastindex(const char* str, char ch) {
+    if (str == NULL) {
+        return -1;
+    }
+
+    int last_idx = -1;
+    int i = 0;
+
+    while (str[i] != '\0') {
+        if (str[i] == ch) {
+            last_idx = i; 
+        }
+        i++;
+    }
+
+    return last_idx;
+}
 
 
 
