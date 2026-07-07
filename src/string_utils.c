@@ -326,6 +326,30 @@ int my_count_char(const char *str, char ch){
 }
 
 
+// 15 str_equal
+int my_strequal(const char *str1, const char *str2){
+
+    if (str1 == NULL || str2 == NULL) {
+        return 0; 
+    }
+    int flag = 1;
+    while(*(str1) != '\0' && *(str2) != '\0'){ 
+        if(*(str1) != *(str2)){ 
+            flag = 0;
+            break;
+        }
+        str1++;
+        str2++;
+    }
+
+    if (*str1 != *str2) {
+        flag = 0;
+    }
+    
+    return flag;
+
+}
+
 
 
 
