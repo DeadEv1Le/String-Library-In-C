@@ -1,182 +1,119 @@
 #include "../include/string_utils.h"
 #include <stdlib.h>
 
-
-
-
-// 1. Str len funkcian rekursiv
-
-int my_strlen (const char *str){
-
+int my_strlen(const char *str) {
     if (str == NULL) return 0;
-
-    if(*str == '\0') {
-        return 0;
-    }
+    if (*str == '\0') return 0;
 
     return 1 + my_strlen(str + 1);
 }
 
-
-// 2. Str cpy funckian
-// char* my_strcpy(char *dest, const char* src) {
-//     static char *start = NULL; 
-//     if (start == NULL) start = dest;
-
-//     *dest = *src;
-    
-//     if (*src == '\0') {
-//         char *temp = start;
-//         start = NULL;
-//         return temp;
-//     }
-    
-//     return my_strcpy(dest + 1, src + 1);
-// }
-
 char* my_strcpy(char* dest, const char* src) {
-    int i = 0;
+    if (dest == NULL || src == NULL) return NULL;
 
+    int i = 0;
     while (*(src + i) != '\0') {
         *(dest + i) = *(src + i); 
         i++;
     }
-    
     *(dest + i) = '\0';
 
     return dest;
 }
 
-
-
-
-
-
-//3. Strn copy
-// char* my_strncpy(char *dest, const char *src, int n) {
-//     static char *start = NULL;
-//     if (start == NULL) start = dest;
-
-//     if (n <= 0) {
-//         char *temp = start;
-//         start = NULL;
-//         return temp;
-//     }
-
-//     if (*src == '\0') {
-//         *dest = '\0';
-//         return my_strncpy(dest + 1, src, n - 1);
-//     } else {
-//          *dest = *src;
-//         return my_strncpy(dest + 1, src + 1, n - 1);
-//     }
-// }
-
-char* my_strncpy(char *dest, const char* src, int n){
+char* my_strncpy(char *dest, const char* src, int n) {
+    if (dest == NULL || src == NULL || n <= 0) return dest;
 
     int i = 0; 
-
-    while(i != n){ 
+    while (i < n && *(src + i) != '\0') { 
         *(dest + i) = *(src + i);
         i++;
     }
-    *(dest+ i) = '\0';
-    
+    while (i < n) {
+        *(dest + i) = '\0';
+        i++;
+    }
+
     return dest;
 }
 
-
-//4 str cat
 char* my_strcat(char* dest, const char* src) { 
+    if (dest == NULL || src == NULL) return NULL;
+
     int i = my_strlen(dest);
-    
     int k = 0;
     
-    while( *(src + k) != '\0'){
+    while (*(src + k) != '\0') {
         *(dest + i) = *(src + k); 
         i++;
         k++;
     }
-    *(dest + i ) = '\0';
+    *(dest + i) = '\0';
     
     return dest;
 }
 
-// //5 strncat
-// char* my_strncat(char* dest, const char* src, int n){ 
-//     int i = my_strlen(dest);
-//     int k = 0;
-//      while( *(src + k) != '\0' && k < n){
-//         *(dest + i) = *(src + k); 
-//         i++;
-//         k++;
-//     }
-//     *(dest + i ) = '\0';
-//     return dest;
-
-// }
-
-//5 strcmp equal -> 0, -tiv -> str1 < str2; +tiv -> str1 > str2
 int my_strcmp(const char *str1, const char *str2) {
-    int i = 0;
+    if (str1 == NULL || str2 == NULL) return 0;
 
-   
+    int i = 0;
     while (*(str1 + i) == *(str2 + i)) {
         if (*(str1 + i) == '\0') {
             return 0;
         }
         i++;
     }
-    return *(str1 + i) - *(str2 + i);
+    return (unsigned char)*(str1 + i) - (unsigned char)*(str2 + i);
 }
-//6.  strncmp
-int my_strncmp(const char *str1, const char *str2, int n){
-     int i = 0;
 
-    while (*(str1 + i) == *(str2 + i)) {
+int my_strncmp(const char *str1, const char *str2, int n) {
+    if (str1 == NULL || str2 == NULL || n <= 0) return 0;
+
+    int i = 0;
+    while (i < n && *(str1 + i) == *(str2 + i)) {
         if (*(str1 + i) == '\0' || i == n - 1) {
             return 0;
         }
         i++;
     }
-    return *(str1 + i) - *(str2 + i);
+    if (i == n) return 0;
+    return (unsigned char)*(str1 + i) - (unsigned char)*(str2 + i);
 }
-//7.strchr
+
 char* my_strchr(const char *str, int ch) {
+    if (str == NULL) return NULL;
+
     int i = 0;
-    
-    while(*(str + i) != '\0') {
-        if (*(str + i ) == ch){
-            
+    while (*(str + i) != '\0') {
+        if (*(str + i) == (char)ch) {
             return (char*)(str + i);
         }
         i++;
     }
-    if (ch == '\0') {
+    if ((char)ch == '\0') {
         return (char *)(str + i);
     }
     return NULL;
-
 }
 
-//8 strrchr 
-char* my_strrchr(const char *str, int ch){
+char* my_strrchr(const char *str, int ch) {
+    if (str == NULL) return NULL;
+
     int i = my_strlen(str);
-    
-    while(i != 0){ 
-        if( *(str + i ) == ch ){
+    while (i >= 0) { 
+        if (*(str + i) == (char)ch) {
             return (char*)(str + i);  
         }
         i--;
-
     }
 
     return NULL;
 }
 
-//9 strstr 
-char* my_strstr(const char *haystack, const char *needle){
+char* my_strstr(const char *haystack, const char *needle) {
+    if (haystack == NULL || needle == NULL) return NULL;
     if (*needle == '\0') return (char*)haystack;
+
     for (const char *h = haystack; *h != '\0'; h++) {
         const char *h_ptr = h;
         const char *n_ptr = needle;
@@ -190,24 +127,21 @@ char* my_strstr(const char *haystack, const char *needle){
     return NULL;
 }
 
-// 10 strspn
 int my_strspn(const char *str, const char *accept) {
-    if(*accept == '\0')return 0;
+    if (str == NULL || accept == NULL || *accept == '\0') return 0;
     
     int i = 0;
-    int k = 0;
-
-    while(*(str + i) != '\0'){ 
+    while (*(str + i) != '\0') { 
         int count = 0;
-        k = 0; 
-        while(*(accept + k) != '\0') { 
-            if(*(str + i) == *(accept + k)){
+        int k = 0; 
+        while (*(accept + k) != '\0') { 
+            if (*(str + i) == *(accept + k)) {
                 count = 1; 
                 break;
             }
             k++;
         }
-        if(!count){ 
+        if (!count) { 
             return i;
         }
         i++;
@@ -215,71 +149,62 @@ int my_strspn(const char *str, const char *accept) {
     return i;
 }
 
-// 11 strcspn 
-int my_strcspn(const char *str, const char *reject){
+int my_strcspn(const char *str, const char *reject) {
+    if (str == NULL || reject == NULL) return 0;
+
     int i = 0;
-    int k = 0;
-    while(*(str + i) != '\0'){ 
+    while (*(str + i) != '\0') { 
         int count = 0;
-        k = 0; 
-        while(*(reject + k) != '\0') { 
-            if(*(str + i) == *(reject + k)){
+        int k = 0; 
+        while (*(reject + k) != '\0') { 
+            if (*(str + i) == *(reject + k)) {
                 count = 1; 
                 break;
             }
             k++;
         }
-        if(count){ 
+        if (count) { 
             return i;
         }
         i++;
     }
-
     return i;
-   
-
 }
-//12 strpbrk
 
-char* my_strpbrk(const char *str, const char *accept){ 
-    if(*accept == '\0')return NULL;
+char* my_strpbrk(const char *str, const char *accept) { 
+    if (str == NULL || accept == NULL || *accept == '\0') return NULL;
     
     int i = 0;
-    int k = 0;
-
-    while(*(str + i) != '\0'){ 
-        int count = 0;
-        k = 0; 
-        while(*(accept + k) != '\0') { 
-            if(*(str + i) == *(accept + k)){
-                count = 1; 
-                break;
+    while (*(str + i) != '\0') { 
+        int k = 0; 
+        while (*(accept + k) != '\0') { 
+            if (*(str + i) == *(accept + k)) {
+                return (char*)(str + i);
             }
             k++;
-        }
-        if(count){ 
-
-            return (char*) (str + i);
         }
         i++;
     }
     return NULL;
 }
 
-//13 strtok
-
-char* my_strtok(char *str, const char *delim){
-    if(*(delim) == '\0') return NULL;
+char* my_strtok(char *str, const char *delim) {
+    if (delim == NULL) return NULL;
 
     static char* tok = NULL;
-    if(str != NULL) tok = str;
+    if (str != NULL) tok = str;
 
-  
-    
     if (tok == NULL) return NULL;
-   
 
-    while (*tok != '\0' && *tok == *delim) {
+    while (*tok != '\0') {
+        int is_delim = 0;
+        for (const char *d = delim; *d != '\0'; d++) {
+            if (*tok == *d) {
+                is_delim = 1;
+                break;
+            }
+        }
+        if (!is_delim) break;
         tok++;
     }
 
@@ -288,35 +213,35 @@ char* my_strtok(char *str, const char *delim){
         return NULL;
     }
 
-    char * start = tok;
-    if (*start == '\0') return NULL;
-   
-   
-    while(*(tok) != '\0') {
-        if(*(tok) == *(delim)){
-            *(tok) = '\0';
+    char *start = tok;
+
+    while (*tok != '\0') {
+        int is_delim = 0;
+        for (const char *d = delim; *d != '\0'; d++) {
+            if (*tok == *d) {
+                is_delim = 1;
+                break;
+            }
+        }
+        if (is_delim) {
+            *tok = '\0';
             tok++;
             return start;
-        } 
+        }
         tok++;
     }
 
     return start;
-    
 }
 
-// 14 my count char
-int my_count_char(const char *str, char ch){ 
-    if(str == NULL || *str == '\0'){
+int my_count_char(const char *str, char ch) { 
+    if (str == NULL || *str == '\0' || ch == '\0') {
         return 0;
     }
-    if(ch == '\0'){
-        return 0; 
-    }
+    
     int count = 0;
-   
-    while(*str != '\0'){
-        if(*(str) == ch){
+    while (*str != '\0') {
+        if (*str == ch) {
             count++;
         }
         str++;
@@ -325,46 +250,33 @@ int my_count_char(const char *str, char ch){
     return count;
 }
 
-
-// 15 str_equal
-int my_strequal(const char *str1, const char *str2){
-
+int my_strequal(const char *str1, const char *str2) {
     if (str1 == NULL || str2 == NULL) {
         return 0; 
     }
-    int flag = 1;
-    while(*(str1) != '\0' && *(str2) != '\0'){ 
-        if(*(str1) != *(str2)){ 
-            flag = 0;
-            break;
+
+    while (*str1 != '\0' && *str2 != '\0') { 
+        if (*str1 != *str2) { 
+            return 0;
         }
         str1++;
         str2++;
     }
 
-    if (*str1 != *str2) {
-        flag = 0;
-    }
-
-    return flag;
-
+    return (*str1 == *str2);
 }
 
-// 16 fill string
-void my_fill_string(char *str, char ch){
-    
-    if(str == NULL){
+void my_fill_string(char *str, char ch) {
+    if (str == NULL) {
         return; 
     }
     
-   
-    while(*(str) != '\0'){
-        *(str) = ch;
+    while (*str != '\0') {
+        *str = ch;
         str++;
     }
 }
 
-//17 add strlastindex 
 int my_strlastindex(const char* str, char ch) {
     if (str == NULL) {
         return -1;
@@ -383,16 +295,10 @@ int my_strlastindex(const char* str, char ch) {
     return last_idx;
 }
 
-
-// 18 strpalindromoe
-
-
-
 int my_strpalindrome(const char *str) {
     if (str == NULL) {
         return 0; 
     }
-
     if (*str == '\0') {
         return 1;
     }
@@ -405,7 +311,6 @@ int my_strpalindrome(const char *str) {
     }
     right--; 
 
-   
     while (left < right) {
         if (*left != *right) {
             return 0;
@@ -414,14 +319,22 @@ int my_strpalindrome(const char *str) {
         right--; 
     }
 
-   
     return 1;
 }
 
+char* my_strreverse(char *str) {
+    if (str == NULL) return NULL;
 
+    int left = 0;
+    int right = my_strlen(str) - 1;
 
+    while (left < right) {
+        char temp = *(str + left);
+        *(str + left) = *(str + right);
+        *(str + right) = temp;
+        left++;
+        right--;
+    }
 
-
-
-
-
+    return str;
+}
